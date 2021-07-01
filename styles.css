@@ -1,0 +1,141 @@
+
+#header {
+    color: rgb(121, 2, 2);
+    font-family: "Eras ITC", "Eras Bold ITC",  sans-serif;
+    font-size: 60px;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both;
+    text-align: center; 
+}
+
+@keyframes fadeInUp { 
+    0% { 
+        opacity: 0; 
+        transform: translateY(20px); 
+    } 
+    100% { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+} 
+
+.fadeInUp { 
+    animation-name: fadeInUp; 
+}
+
+
+.button {
+        border: 1px solid #ce0000;
+        background: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        font-family: "Eras ITC", "Eras Bold ITC",  sans-serif;
+        cursor: pointer;
+        margin: 10px;
+        margin-top: 30px;
+        transition: 0.8s;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+}
+
+.button:hover{
+    color: #ffffff;
+}
+
+.button::before{
+    content: "";
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    height: 0%;
+    background: #ce0000;
+    z-index: -1;
+    transition: 0.8s;
+}
+
+.button::before{
+    bottom:0;
+    border-radius: 50% 50% 0 0;
+}
+
+.button:hover:before {
+    height: 180%;
+}
+
+#questionText {
+    color: black;
+    font-family: "Eras ITC", "Eras Bold ITC",  sans-serif;
+    font-size: 30px;
+    margin-top: 15px;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+#zillow {
+    color:white;
+    margin-top: 50px;
+    
+}
+
+#estimatedRateText {
+    font-size: 40px;
+    margin-top: 20px;
+    color: black;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+#currentRateEstimate {
+    font-size: 30px;
+    margin-top: 20px;
+    font-family: "Eras ITC", "Eras Bold ITC",  sans-serif;
+    color: #ce0000;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+
+#callToday {
+    font-size: 20px;
+    margin-top: 20px;
+    font-family: "Eras ITC", "Eras Bold ITC",  sans-serif;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+#blinkLink {
+    color: black;
+    font-size: 25px;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+#buttonsArea {
+    text-align: center;
+}
+
+#phoneNumber {
+    color: black;
+    font-size: 25px;
+    animation: fadeInUp;
+    animation-duration: 1s; 
+    animation-fill-mode: both; 
+    text-align: center;
+}
+
+.ctabutton {
+    color: transparent;
+    size: 1px;
+}

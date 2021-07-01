@@ -1,0 +1,250 @@
+<div id="div1">
+    <header id="header">Get a Rate Estimate in Just 30 Seconds!</header>
+    <div id= "questionText"> 
+        Are you looking to Refinance or Purchase?
+    </div>
+    <div id="buttonsArea">
+        <button class= "button" id="purchaseButton" type="button">Purchase</button>
+        <button class= "button" id="refinanceButton" type="button">Refinance</button>
+    </div>
+</div>
+<div id="zillow">
+    See more <a id="zillow" href="http://www.zillow.com/mortgage-rates/">mortgage rates</a> on Zillow
+</div>
+<script>
+
+    // USER RESPONSES 
+
+    let responses = [];
+
+    // EVENT LISTNERS ********************************************************************
+
+    // REFINANCE BUTTON
+    document.getElementById("refinanceButton").addEventListener('click', () => {
+        responses[0] = true
+        clearQuestion1();
+        addQuestion2();
+        document.getElementById('questionText').innerHTML = 'What state are you in?'
+        
+    });
+
+    // PURCHASE BUTTON
+    document.getElementById("purchaseButton").addEventListener('click', () => {
+        responses[0] = false
+        clearQuestion1();
+        addQuestion2();
+        document.getElementById('questionText').innerHTML = 'What state are you in?'
+    });
+
+
+    // FUNCTIONS *************************************************************
+    
+    // GET CURRENT RATES
+
+        function getCurrentRate(purchaseType, state, loanType, loanAmount, creditScore) {
+        fetch(`https://mortgageapi.zillow.com/getCurrentRates?partnerId=RD-QYMZRZN&queries.default.refinance=${purchaseType}&queries.default.stateAbbreviation=${state}&queries.default.loanType=${loanType}&queries.default.loanAmountBucket=${loanAmount}&queries.default.creditScoreBucket=${creditScore}`)
+        .then(rate => rate.json())
+        .then (rates => { 
+            // console.log(rates.rates.default.rate)
+            if(rates.rates.default.rate !== 0){
+            addElement('div1', 'div', 'currentRateEstimate', `${rates.rates.default.rate}%`)
+            addElement('header', 'div', 'estimatedRateText', 'Your Estimated Rate is...')
+            addElement('div1', 'div', 'callToday', 'Follow up and contact one of our experienced Loan Officers to get your exact quote today!')
+            //addElement('div1', 'div', 'callToday', '<a id="blinkLink" href="https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/">Click Here To Get in Contact</a>')
+            addElement('div1', 'div', 'callToday', `<a onclick="return gtag_report_conversion('https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/');" href="https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/" target="_blank">Click Here to Get in Contact</a>`)
+            addElement('div1', 'div', 'phoneNumber', 'or call')
+            addElement('div1', 'div', 'phoneNumber', '(603) 290-5227')
+            } else if (rates.rates.default.rate === 0){
+            addElement('div1', 'div', 'currentRateEstimate', `You can contact us at info@pmlhomloans.com or follow the link below to start an application and we will be in contact shortly!`)
+            addElement('header', 'div', 'estimatedRateText', 'Contact us Today to get your Rate!')
+            //addElement('div1', 'div', 'callToday', '<a id="blinkLink" href="https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/">Click Here To Start an Application</a>')
+            addElement('div1', 'div', 'callToday', `<a onclick="return gtag_report_conversion('https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/');" href="https://www.blink.mortgage/app/signup/p/premiermortgagelendingllc/" target="_blank">Click Here to Start an Application</a>`)
+            addElement('div1', 'div', 'phoneNumber', 'or call')
+            addElement('div1', 'div', 'phoneNumber', '(603) 290-5227')
+            }
+            
+        })
+        .catch()
+     };
+     
+    // CLEAR QUESTIONS
+
+    function clearQuestion1() {
+        document.getElementById('refinanceButton').remove()
+        document.getElementById('purchaseButton').remove()
+    }
+
+    function clearQuestion2 (){
+        document.getElementById('stateNH').remove()
+        document.getElementById('stateMA').remove()
+        document.getElementById('stateME').remove()
+    }
+
+    function clearQuestion3(){
+        document.getElementById('conventionalLoan').remove()
+        document.getElementById('FHALoan').remove()
+        document.getElementById('VALoan').remove()
+        document.getElementById('USDALoan').remove()
+        document.getElementById('jumboLoan').remove()
+    }
+    
+    function clearQuestion4() {
+        document.getElementById('micro').remove()
+        document.getElementById('smallConforming').remove()
+        document.getElementById('conforming').remove()
+        document.getElementById('superConforming').remove()
+        document.getElementById('jumbo').remove()
+    }
+
+    function clearQuestion5(){
+        document.getElementById('low').remove()
+        document.getElementById('high').remove()
+        document.getElementById('veryHigh').remove()
+    }
+
+    // ADD QUESTIONS
+
+    function addQuestion2 (){
+        addElement('div1', 'div', 'buttonsArea', '<button class="button" id="stateNH" type="button">NH</button> <button class="button" id="stateMA" type="button">MA</button> <button class="button" id="stateME" type="button">ME</button>')
+        // NH EVENT LISTENER
+        document.getElementById("stateNH").addEventListener('click', () => {
+        responses[1] = 'NH'
+        document.getElementById('questionText').innerHTML = 'Loan Type?'
+        clearQuestion2();
+        addQuestion3();
+    });
+        // MA EVENT LISTENER
+        document.getElementById("stateMA").addEventListener('click', () => {
+        responses[1] = 'MA'
+        document.getElementById('questionText').innerHTML = 'Loan Type?'
+        clearQuestion2();
+        addQuestion3();
+    });
+        // ME EVENT LISTENER
+        document.getElementById("stateME").addEventListener('click', () => {
+        responses[1] = 'ME'
+        document.getElementById('questionText').innerHTML = 'Loan Type?'
+        clearQuestion2();
+        addQuestion3();
+    });
+    };
+
+    function addQuestion3 (){
+        addElement('div1', 'div', 'buttonsArea', '<button class="button" id="conventionalLoan" type="button">Conventional</button> <button class="button" id="FHALoan" type="button">FHA</button> <button class="button" id="VALoan" type="button">VA</button> <button class="button" id="USDALoan" type="button">USDA</button> <button class="button" id="jumboLoan" type="button">Jumbo</button>')
+        // CONVENTIONAL LOAN EVENT LISTENER
+        document.getElementById("conventionalLoan").addEventListener('click', () => {
+        responses[2] = 'Conventional'
+        document.getElementById('questionText').innerHTML = 'What is your loan amount?'
+        clearQuestion3();
+        addQuestion4();
+        });
+        // FHA LOAN EVENT LISTENER
+        document.getElementById("FHALoan").addEventListener('click', () => {
+        responses[2] = 'FHA'
+        document.getElementById('questionText').innerHTML = 'What is your loan amount?'
+        clearQuestion3();
+        addQuestion4();
+        });
+        // VA LOAN EVENT LISTENER
+        document.getElementById("VALoan").addEventListener('click', () => {
+        responses[2] = 'VA'
+        document.getElementById('questionText').innerHTML = 'What is your loan amount?'
+        clearQuestion3();
+        addQuestion4();
+        });
+        // USDA EVENT LISTENER
+        document.getElementById("USDALoan").addEventListener('click', () => {
+        responses[2] = 'USDA'
+        document.getElementById('questionText').innerHTML = 'What is your loan amount?'
+        clearQuestion3();
+        addQuestion4();
+        });
+        // JUMBO LOAN EVENT LISTENER
+        document.getElementById("jumboLoan").addEventListener('click', () => {
+        responses[2] = 'VA'
+        document.getElementById('questionText').innerHTML = 'What is your loan amount?'
+        clearQuestion3();
+        addQuestion4();
+        });
+        };   
+
+    function addQuestion4 (){
+        addElement('div1', 'div', 'buttonsArea', '<button class="button" id="micro" type="button">Micro</button> <button class="button" id="smallConforming" type="button">Small Conforming</button> <button class="button" id="conforming" type="button">Conforming</button> <button class="button" id="superConforming" type="button">Super Conforming</button> <button class="button" id="jumbo" type="button">Jumbo</button>')
+        // MICRO EVENT LISTENER
+        document.getElementById("micro").addEventListener('click', () => {
+        responses[3] = 'Micro'
+        document.getElementById('questionText').innerHTML = 'What is your Credit Score?'
+        clearQuestion4();
+        addQuestion5();     
+    });
+        // SMALL CONFORMING EVENT LISTENER
+        document.getElementById("smallConforming").addEventListener('click', () => {
+        responses[3] = 'SmallConforming'
+        document.getElementById('questionText').innerHTML = 'What is your Credit Score?'
+        clearQuestion4();
+        addQuestion5();     
+    });
+        // CONFORMING EVENT LISTENER
+        document.getElementById("conforming").addEventListener('click', () => {
+        responses[3] = 'Conforming'
+        document.getElementById('questionText').innerHTML = 'What is your Credit Score?'
+        clearQuestion4();
+        addQuestion5();     
+    });
+        // SUPER CONFORMING EVENT LISTENER
+        document.getElementById("superConforming").addEventListener('click', () => {
+        responses[3] = 'SuperConforming'
+        document.getElementById('questionText').innerHTML = 'What is your Credit Score?'
+        clearQuestion4();
+        addQuestion5();     
+    });
+        // JUMBO EVENT LISTENER
+        document.getElementById("jumbo").addEventListener('click', () => {
+        responses[3] = 'Jumbo'
+        document.getElementById('questionText').innerHTML = 'What is your Credit Score?'
+        clearQuestion4();
+        addQuestion5();     
+    });
+    }
+
+    function addQuestion5(){
+        addElement('div1', 'div', 'buttonsArea', '<button class="button" id="low" type="button">Low (Less than 680)</button> <button class="button" id="high" type="button">High (Between 680 and 740)</button> <button class="button" id="veryHigh" type="button">Very High (740 and higher)</button>')
+        // LOW CREDIT SCORE EVENT LISTENER
+        document.getElementById("low").addEventListener('click', () => {
+        responses[4] = 'Low'
+        document.getElementById('questionText').remove();
+        clearQuestion5();
+        getCurrentRate(responses[0],responses[1], responses[2], responses[3],responses[4]);
+    });
+        // HIGH CREDIT SCORE EVENT LISTENER
+        document.getElementById("high").addEventListener('click', () => {
+        responses[4] = 'High'
+        document.getElementById('questionText').remove();
+        clearQuestion5();
+        getCurrentRate(responses[0],responses[1], responses[2], responses[3],responses[4]);
+    });
+        // VERY HIGH CREDIT SCORE EVENT LISTENER
+        document.getElementById("veryHigh").addEventListener('click', () => {
+        responses[4] = 'VeryHigh'
+        document.getElementById('questionText').remove();
+        clearQuestion5();
+        getCurrentRate(responses[0],responses[1], responses[2], responses[3],responses[4]);
+    });
+    }
+
+
+    // ADD ELEMENT FUNCTION 
+
+    function addElement(parentId, elementTag, elementId, html) {
+    var p = document.getElementById(parentId);
+    var newElement = document.createElement(elementTag);
+    newElement.setAttribute('id', elementId);
+    newElement.innerHTML = html;
+    p.appendChild(newElement);
+    }
+
+
+</script>
+
+<link rel="stylesheet" href="styles.css">
+
